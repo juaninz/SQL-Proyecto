@@ -1,5 +1,4 @@
 CREATE SCHEMA elconstructor;
-
 USE elconstructor;
 
 CREATE TABLE unidades (
@@ -11,7 +10,7 @@ CREATE TABLE proveedores (
   id_proveedor INT PRIMARY KEY NOT NULL auto_increment UNIQUE,
   nombre VARCHAR(50) NOT NULL,
   ubicacion VARCHAR(50) NOT NULL,
-  telefono INT NOT NULL
+  telefono VARCHAR(20) NOT NULL
 );
 
 CREATE TABLE productos (
@@ -19,6 +18,7 @@ CREATE TABLE productos (
   nombre VARCHAR(50) NOT NULL,
   id_unidad INT NOT NULL,
   cant_stock INT NOT NULL,
+  precio_unitario DECIMAL(8,2) NOT NULL,
   id_proveedor INT NOT NULL,
   FOREIGN KEY (id_unidad) REFERENCES unidades(id_unidad),
   FOREIGN KEY(id_proveedor) REFERENCES proveedores(id_proveedor)
@@ -29,7 +29,7 @@ CREATE TABLE clientes (
   nombre VARCHAR(50) NOT NULL,
   apellido VARCHAR(50) NOT NULL,
   direccion VARCHAR(50) NOT NULL,
-  telefono INT NOT NULL
+  telefono VARCHAR(20) NOT NULL
 );
 
 
@@ -59,7 +59,9 @@ CREATE TABLE detalle (
   id_factura INT NOT NULL,
   id_producto INT NOT NULL,
   cantidad INT NOT NULL,
-  precio INT NOT NULL,
+  PRIMARY KEY (id_factura,id_producto),
   FOREIGN KEY(id_factura) REFERENCES factura(id_factura),
   FOREIGN KEY(id_producto) REFERENCES productos(id_producto)
 );
+
+
