@@ -2,11 +2,11 @@ use elconstructor;
 
 /*VISTA PARA VER CUANTO SE VENDIO EN TERMINOS DE DINERO CADA PRODUCTO*/
 CREATE VIEW top_productos_$ AS
-SELECT d.id_producto, d.cantidad , pr.nombre , pr.precio_unitario , SUM(d.cantidad*pr.precio_unitario) as total
+SELECT d.id_producto, SUM(d.cantidad), pr.nombre, pr.precio_unitario, SUM(d.cantidad * pr.precio_unitario) as total
 FROM detalle d
-JOIN productos pr on d.id_producto = pr.id_producto
-group by pr.id_producto
-order by total desc;
+JOIN productos pr ON d.id_producto = pr.id_producto
+GROUP BY d.id_producto
+ORDER BY total DESC;
 
 /*VISTA PARA VER CUANTO SE VENDIO EN TERMINOS DE cantidad*/
 CREATE VIEW top_productos_Q AS
