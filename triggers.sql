@@ -11,7 +11,6 @@ CREATE TABLE products_audits (
 );
 
 -- Trigger que inserta valores en la tabla de auditoria para registrar los movimientos de insercion en la tabla productos
-Drop trigger `tr_insert_product_aud`;
 CREATE TRIGGER `tr_insert_product_aud`
 AFTER INSERT ON `productos`
 FOR EACH ROW
@@ -36,7 +35,6 @@ SELECT * FROM products_audits;
 
 -- Trigger de verificacion de duplicados
 DELIMITER //
-
 CREATE TRIGGER trigger_evitar_duplicados
 BEFORE INSERT ON productos
 FOR EACH ROW
@@ -65,7 +63,6 @@ CREATE TABLE prov_audits (
     last_updated_by varchar(100)
 );
 
-drop trigger `tr_insert_prov_aud`;
 -- Trigger que inserta valores en la tabla de auditoria para registrar los movimientos de insercion en la tabla proveedores
 CREATE TRIGGER `tr_insert_prov_aud`
 AFTER INSERT ON `proveedores`
@@ -73,7 +70,7 @@ FOR EACH ROW
 INSERT INTO `prov_audits`(entity, entity_id, insert_dt, created_by, last_update_dt, last_updated_by) 
 VALUES ('proveedor', NEW.id_proveedor,CURRENT_TIMESTAMP(), USER(), CURRENT_TIMESTAMP(), USER());
 
-delete from proveedores where nombre = 'Strike Corralon';
+
 INSERT INTO proveedores (nombre, ubicacion, telefono) VALUES
     ('Strike Corralon', 'Belgrano 1268', '3624970408');
 SELECT * FROM prov_audits;
@@ -91,7 +88,6 @@ SELECT * FROM prov_audits;
 
 
 -- Trigger de verificacion de duplicados
-drop trigger trigger_evitar_duplicados_prov;
 DELIMITER //
 
 CREATE TRIGGER trigger_evitar_duplicados_prov
