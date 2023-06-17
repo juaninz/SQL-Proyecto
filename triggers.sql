@@ -4,6 +4,7 @@ CREATE TABLE products_audits (
 	id_log INT PRIMARY KEY auto_increment,
     entity varchar(100),
     entity_id int,
+    entity_name varchar(100),
     insert_dt datetime,
     created_by varchar(100),
     last_update_dt datetime,
@@ -14,8 +15,8 @@ CREATE TABLE products_audits (
 CREATE TRIGGER `tr_insert_product_aud`
 AFTER INSERT ON `productos`
 FOR EACH ROW
-INSERT INTO `products_audits`(entity, entity_id, insert_dt, created_by, last_update_dt, last_updated_by) 
-VALUES ('product', NEW.id_producto,CURRENT_TIMESTAMP(), USER(), CURRENT_TIMESTAMP(), USER());
+INSERT INTO `products_audits`(entity, entity_id, entity_name, insert_dt, created_by, last_update_dt, last_updated_by) 
+VALUES ('product', NEW.id_producto, NEW.nombre, CURRENT_TIMESTAMP(), USER(), CURRENT_TIMESTAMP(), USER());
 
 INSERT INTO productos (nombre, id_unidad, cant_stock, precio_unitario, id_proveedor) VALUES
     ('Cinto Métrica', 3 , 20 , 1000 , 2 );
@@ -57,6 +58,7 @@ CREATE TABLE prov_audits (
 	id_log INT PRIMARY KEY auto_increment,
     entity varchar(100),
     entity_id int,
+    entity_nombre varchar(100),
     insert_dt datetime,
     created_by varchar(100),
     last_update_dt datetime,
@@ -67,12 +69,12 @@ CREATE TABLE prov_audits (
 CREATE TRIGGER `tr_insert_prov_aud`
 AFTER INSERT ON `proveedores`
 FOR EACH ROW
-INSERT INTO `prov_audits`(entity, entity_id, insert_dt, created_by, last_update_dt, last_updated_by) 
-VALUES ('proveedor', NEW.id_proveedor,CURRENT_TIMESTAMP(), USER(), CURRENT_TIMESTAMP(), USER());
+INSERT INTO `prov_audits`(entity, entity_id, entity_nombre,insert_dt, created_by, last_update_dt, last_updated_by) 
+VALUES ('proveedor', NEW.id_proveedor, NEW.nombre,CURRENT_TIMESTAMP(), USER(), CURRENT_TIMESTAMP(), USER());
 
 
 INSERT INTO proveedores (nombre, ubicacion, telefono) VALUES
-    ('Strike Corralon', 'Belgrano 1268', '3624970408');
+    ('La nueva productos', 'Belgrano 1300', '3624971208');
 SELECT * FROM prov_audits;
 
 -- Trigger que actualiza automáticamente la tabla de auditoria de un proveedor luego de un update.
